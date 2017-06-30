@@ -6,6 +6,7 @@ var del = require('del');
 var rename = require('gulp-rename');
 var insert = require('gulp-insert');
 var sourcemaps = require('gulp-sourcemaps');
+var identityMap = require('@gulp-sourcemaps/identity-map');
 
 var livecenter_js = '/livecenter.js';
 var livecenter_min = '/livecenter.min.js';
@@ -77,6 +78,15 @@ gulp.task('minify-js', function() {
         .pipe(gulp.dest(bundle_dir));
 })
 
+gulp.task('sourcemap-js', function() {
+    return gulp.src(bundle_dir + livecenter_js)
+        .pipe(sourcemaps.init())
+        .pipe(identityMap()) // .js and .css files will get a generated sourcemap
+        .pipe(sourcemaps.write())
+        .pipe(rename(livecenter_js + '.map'))
+        .pipe(gulp.dest(bundle_dir));
+})
+
 gulp.task('minify-api-js', function() {
     return gulp.src(bundle_dir + livecenter_js)
         .pipe(uglify().on('error', function(e){
@@ -101,7 +111,7 @@ gulp.task('copy-api-min-file', function() {
 });
 
 gulp.task('default', function() {
-    runSequence('clean', 'copy-js', 'concat-js','minify-js', 'finish-task', 'copy-min-file');
+    runSequence('clean', 'copy-js', 'concat-js',['minify-js','sourcemap-js'], 'finish-task', 'copy-min-file');
 });
 
 gulp.task('api', function() {

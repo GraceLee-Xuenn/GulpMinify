@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "release": "gulp --gulpfile gulpfile_Release.js",
-    "relapi": "gulp --gulpfile gulpfile_Release.js api"
+    "release": "gulp --gulpfile gulpfile.js",
+    "relapi": "gulp --gulpfile gulpfile.js api"
   },
   "dependencies": {
     "del": "^2.2.2",
