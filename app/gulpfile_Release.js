@@ -64,7 +64,7 @@ gulp.task('concat-api-js', function() {
              bundle_js + '/player.js',
              bundle_js + '/divResize.js'
         ])
-        .pipe(concat(livecenter_api_min))
+        .pipe(concat(livecenter_js))
         .pipe(gulp.dest(bundle_dir));
 });
 
@@ -73,25 +73,21 @@ gulp.task('minify-js', function() {
         .pipe(uglify().on('error', function(e){
             console.log(e);
         }))
-        .pipe(rename({suffix: '.min'}))
+        .pipe(rename(livecenter_min))
         .pipe(gulp.dest(bundle_dir));
 })
 
 gulp.task('minify-api-js', function() {
-    return gulp.src(bundle_dir + livecenter_api_min)
+    return gulp.src(bundle_dir + livecenter_js)
         .pipe(uglify().on('error', function(e){
             console.log(e);
         }))
+        .pipe(rename(livecenter_api_min))
         .pipe(gulp.dest(bundle_dir));
 })
 
 gulp.task('finish-task', function() {
     return del(bundle_js);
-});
-
-gulp.task('copy-concat-file', function() {
-    return gulp.src(bundle_dir + livecenter_js)
-        .pipe(gulp.dest(destDir + '//source'));
 });
 
 gulp.task('copy-min-file', function() {
