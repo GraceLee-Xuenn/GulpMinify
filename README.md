@@ -1,5 +1,7 @@
-## Setup ##
+## Description ##
+Use gulp to minify js code
 
+## Setup ##
 1. Install Nodejs
 2. exec cmd to install Gulp CLI
     
